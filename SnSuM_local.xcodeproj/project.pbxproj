@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		08F0B6B62CEA45B700818673 /* sendURL.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08F0B6862CEA3D9A00818673 /* sendURL.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		086833AD2CE4E83E002170A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -37,6 +41,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				08F0B6B62CEA45B700818673 /* sendURL.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,34 +49,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0868339C2CE4E83C002170A3 /* SnSuM_local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SnSuM_local.app; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/SnSuM_local.app"; sourceTree = "<absolute>"; };
-		086833AC2CE4E83E002170A3 /* SnSuM_localTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SnSuM_localTests.xctest; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/SnSuM_local.app/PlugIns/SnSuM_localTests.xctest"; sourceTree = "<absolute>"; };
-		086833B62CE4E83E002170A3 /* SnSuM_localUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SnSuM_localUITests.xctest; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/SnSuM_localUITests-Runner.app/PlugIns/SnSuM_localUITests.xctest"; sourceTree = "<absolute>"; };
-		0868341F2CE61E73002170A3 /* sendURL.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = sendURL.appex; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/sendURL.appex"; sourceTree = "<absolute>"; };
+		08F0B6862CEA3D9A00818673 /* sendURL.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = sendURL.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		08F0B6872CEA3D9A00818673 /* SnSuM_local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnSuM_local.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08F0B6882CEA3D9A00818673 /* SnSuM_localTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnSuM_localTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08F0B6892CEA3D9A00818673 /* SnSuM_localUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnSuM_localUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		08DE037D2CE9E76A002A3B61 /* Exceptions for "sendURL" folder in "sendURL" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"/Localized: MainInterface.storyboard",
 				Info.plist,
 			);
 			target = 0868341E2CE61E73002170A3 /* sendURL */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		08DE037C2CE9E6CA002A3B61 /* Exceptions for "sendURL" folder in "Copy Bundle Resources" phase from "sendURL" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 0868341D2CE61E73002170A3 /* Resources */;
-			membershipExceptions = (
-				sendURL.entitlements,
-				ShareModel.swift,
-				ShareView.swift,
-				ShareViewController.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0868339E2CE4E83C002170A3 /* SnSuM_local */ = {
@@ -93,7 +86,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				08DE037D2CE9E76A002A3B61 /* Exceptions for "sendURL" folder in "sendURL" target */,
-				08DE037C2CE9E6CA002A3B61 /* Exceptions for "sendURL" folder in "Copy Bundle Resources" phase from "sendURL" target */,
 			);
 			path = sendURL;
 			sourceTree = "<group>";
@@ -139,6 +131,10 @@
 				086833AF2CE4E83E002170A3 /* SnSuM_localTests */,
 				086833B92CE4E83E002170A3 /* SnSuM_localUITests */,
 				086834202CE61E73002170A3 /* sendURL */,
+				08F0B6862CEA3D9A00818673 /* sendURL.appex */,
+				08F0B6872CEA3D9A00818673 /* SnSuM_local.app */,
+				08F0B6882CEA3D9A00818673 /* SnSuM_localTests.xctest */,
+				08F0B6892CEA3D9A00818673 /* SnSuM_localUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -166,7 +162,7 @@
 			packageProductDependencies = (
 			);
 			productName = SnSuM_local;
-			productReference = 0868339C2CE4E83C002170A3 /* SnSuM_local.app */;
+			productReference = 08F0B6872CEA3D9A00818673 /* SnSuM_local.app */;
 			productType = "com.apple.product-type.application";
 		};
 		086833AB2CE4E83E002170A3 /* SnSuM_localTests */ = {
@@ -189,7 +185,7 @@
 			packageProductDependencies = (
 			);
 			productName = SnSuM_localTests;
-			productReference = 086833AC2CE4E83E002170A3 /* SnSuM_localTests.xctest */;
+			productReference = 08F0B6882CEA3D9A00818673 /* SnSuM_localTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		086833B52CE4E83E002170A3 /* SnSuM_localUITests */ = {
@@ -212,7 +208,7 @@
 			packageProductDependencies = (
 			);
 			productName = SnSuM_localUITests;
-			productReference = 086833B62CE4E83E002170A3 /* SnSuM_localUITests.xctest */;
+			productReference = 08F0B6892CEA3D9A00818673 /* SnSuM_localUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		0868341E2CE61E73002170A3 /* sendURL */ = {
@@ -234,7 +230,7 @@
 			packageProductDependencies = (
 			);
 			productName = sendURL;
-			productReference = 0868341F2CE61E73002170A3 /* sendURL.appex */;
+			productReference = 08F0B6862CEA3D9A00818673 /* sendURL.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -632,7 +628,7 @@
 				INFOPLIST_FILE = sendURL/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = sendURL;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -659,7 +655,7 @@
 				INFOPLIST_FILE = sendURL/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = sendURL;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
