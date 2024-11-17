@@ -87,11 +87,11 @@ struct YourListView: View {
         isLoading = true
 
         DispatchQueue.global(qos: .userInitiated).async {
-            if let savedTags = self.sharedDefaults?.dictionary(forKey: "tags") as? [String: [String]] {
-                let filteredURLs = savedTags.compactMap { key, tags in
-                    tags.contains(self.searchTag) ? key : nil
+            if let savedURLs = self.sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] {
+                let filteredURLs = savedURLs.flatMap { (tag, urls) in
+                    tag.contains(self.searchTag) ? urls : []
                 }
-                
+
                 DispatchQueue.main.async {
                     self.urls = filteredURLs
                     isLoading = false
@@ -106,9 +106,9 @@ struct YourListView: View {
     }
 
     private func displayAllURLs() {
-        if let savedTags = sharedDefaults?.dictionary(forKey: "tags") as? [String: [String]] {
+        if let savedURLs = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] {
             DispatchQueue.main.async {
-                self.urls = Array(savedTags.keys)
+                self.urls = savedURLs.flatMap { $0.value }
             }
         } else {
             DispatchQueue.main.async {
@@ -141,7 +141,7 @@ struct YourListView: View {
             return
         }
         
-        guard var savedURLs = sharedDefaults?.array(forKey: "urls") as? [String] else {
+        guard var savedURLs = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] else {
             print("No saved URLs found in UserDefaults.")
             return
         }
@@ -156,11 +156,14 @@ struct YourListView: View {
             }
         }
         
-        // URLsリストから該当URLを削除
-        if let index = savedURLs.firstIndex(of: url) {
-            savedURLs.remove(at: index)
-        } else {
-            print("URL \(url) not found in the 'urls' list.")
+        // URLを保存している URLs 配列から削除
+        for (tag, urls) in savedURLs {
+            if let index = urls.firstIndex(of: url) {
+                savedURLs[tag]?.remove(at: index)
+                if savedURLs[tag]?.isEmpty == true {
+                    savedURLs.removeValue(forKey: tag)
+                }
+            }
         }
         
         // 既存のデータを完全に削除
@@ -178,7 +181,7 @@ struct YourListView: View {
             print("After deletion - Tags: nil")
         }
         
-        if let updatedURLs = sharedDefaults?.array(forKey: "urls") as? [String] {
+        if let updatedURLs = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] {
             print("After deletion - URLs: \(updatedURLs)")
         } else {
             print("After deletion - URLs: nil")

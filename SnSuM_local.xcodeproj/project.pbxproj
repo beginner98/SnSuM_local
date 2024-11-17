@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		086834292CE61E73002170A3 /* sendURL.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0868341F2CE61E73002170A3 /* sendURL.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		086833AD2CE4E83E002170A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -41,7 +37,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				086834292CE61E73002170A3 /* sendURL.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,14 +44,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0868339C2CE4E83C002170A3 /* SnSuM_local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnSuM_local.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		086833AC2CE4E83E002170A3 /* SnSuM_localTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnSuM_localTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		086833B62CE4E83E002170A3 /* SnSuM_localUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnSuM_localUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0868341F2CE61E73002170A3 /* sendURL.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = sendURL.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0868339C2CE4E83C002170A3 /* SnSuM_local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SnSuM_local.app; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/SnSuM_local.app"; sourceTree = "<absolute>"; };
+		086833AC2CE4E83E002170A3 /* SnSuM_localTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SnSuM_localTests.xctest; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/SnSuM_local.app/PlugIns/SnSuM_localTests.xctest"; sourceTree = "<absolute>"; };
+		086833B62CE4E83E002170A3 /* SnSuM_localUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SnSuM_localUITests.xctest; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/SnSuM_localUITests-Runner.app/PlugIns/SnSuM_localUITests.xctest"; sourceTree = "<absolute>"; };
+		0868341F2CE61E73002170A3 /* sendURL.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = sendURL.appex; path = "/Users/kkkuwaaa/Documents/開発/SnSuM_local/build/Debug-iphoneos/sendURL.appex"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0868342A2CE61E73002170A3 /* Exceptions for "sendURL" folder in "sendURL" target */ = {
+		08DE037D2CE9E76A002A3B61 /* Exceptions for "sendURL" folder in "sendURL" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -64,6 +59,19 @@
 			target = 0868341E2CE61E73002170A3 /* sendURL */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		08DE037C2CE9E6CA002A3B61 /* Exceptions for "sendURL" folder in "Copy Bundle Resources" phase from "sendURL" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 0868341D2CE61E73002170A3 /* Resources */;
+			membershipExceptions = (
+				sendURL.entitlements,
+				ShareModel.swift,
+				ShareView.swift,
+				ShareViewController.swift,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0868339E2CE4E83C002170A3 /* SnSuM_local */ = {
@@ -84,7 +92,8 @@
 		086834202CE61E73002170A3 /* sendURL */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				0868342A2CE61E73002170A3 /* Exceptions for "sendURL" folder in "sendURL" target */,
+				08DE037D2CE9E76A002A3B61 /* Exceptions for "sendURL" folder in "sendURL" target */,
+				08DE037C2CE9E6CA002A3B61 /* Exceptions for "sendURL" folder in "Copy Bundle Resources" phase from "sendURL" target */,
 			);
 			path = sendURL;
 			sourceTree = "<group>";
@@ -130,19 +139,7 @@
 				086833AF2CE4E83E002170A3 /* SnSuM_localTests */,
 				086833B92CE4E83E002170A3 /* SnSuM_localUITests */,
 				086834202CE61E73002170A3 /* sendURL */,
-				0868339D2CE4E83C002170A3 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		0868339D2CE4E83C002170A3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0868339C2CE4E83C002170A3 /* SnSuM_local.app */,
-				086833AC2CE4E83E002170A3 /* SnSuM_localTests.xctest */,
-				086833B62CE4E83E002170A3 /* SnSuM_localUITests.xctest */,
-				0868341F2CE61E73002170A3 /* sendURL.appex */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,7 +273,7 @@
 			mainGroup = 086833932CE4E83C002170A3;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 0868339D2CE4E83C002170A3 /* Products */;
+			productRefGroup = 086833932CE4E83C002170A3;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

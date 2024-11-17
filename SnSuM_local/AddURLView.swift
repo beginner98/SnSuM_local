@@ -59,22 +59,43 @@ struct AddURLView: View {
     }
     
     // ローカルでURLとタグを追加
-    private func addURL(_ url: String, tags: [String]) {
-        var savedURLs = sharedUserDefaults?.array(forKey: "urls") as? [String] ?? []
-        var savedTags = sharedUserDefaults?.dictionary(forKey: "tags") as? [String: [String]] ?? [:]
+    private func addURL(_ url: String, tags: [String], memo: String? = nil) {
+        // 既存データの取得
+        var savedURLs = sharedUserDefaults?.dictionary(forKey: "urls") as? [String: [String]] ?? [:]
+        var savedInfo = sharedUserDefaults?.dictionary(forKey: "info") as? [String: [String: Any]] ?? [:]
         
-        // 新しいURLを保存
-        savedURLs.append(url)
+        // 日時を取得
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = formatter.string(from: currentDate)
+        
+        // `urls` 配列に新しい URL をタグごとに追加
+        for tag in tags {
+            if savedURLs[tag] == nil {
+                savedURLs[tag] = []
+            }
+            if !savedURLs[tag]!.contains(url) {
+                savedURLs[tag]!.append(url)
+            }
+        }
+        
+        // `info` 配列に新しい URL 情報を追加
+        savedInfo[url] = [
+            "tags": tags,
+            "date": dateString,
+            "memo": memo ?? ""
+        ]
+        
+        // データの保存
         sharedUserDefaults?.set(savedURLs, forKey: "urls")
-        
-        // 新しいタグをURLに紐づけて保存（複数タグを保存）
-        savedTags[url] = tags
-        sharedUserDefaults?.set(savedTags, forKey: "tags")
+        sharedUserDefaults?.set(savedInfo, forKey: "info")
         
         // 追加後に画面を閉じる
         presentationMode.wrappedValue.dismiss()
         print("URL added successfully!")
     }
+
 
     // 入力されたテキストから空白区切りのタグを抽出するメソッド
     private func extractTags(from text: String) -> [String] {
