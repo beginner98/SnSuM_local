@@ -123,75 +123,67 @@ struct YourListView: View {
 
     private func deleteURL(url: String) {
         // 削除前のデータをログ出力
-        if let initialTags = sharedDefaults?.dictionary(forKey: "tags") as? [String: [String]] {
+        if let initialTags = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] {
             print("Before deletion - Tags: \(initialTags)")
         } else {
             print("Before deletion - Tags: nil")
         }
-        
-        if let initialURLs = sharedDefaults?.array(forKey: "urls") as? [String] {
-            print("Before deletion - URLs: \(initialURLs)")
+
+        if let initialInfo = sharedDefaults?.dictionary(forKey: "info") as? [String: [String: Any]] {
+            print("Before deletion - Info: \(initialInfo)")
         } else {
-            print("Before deletion - URLs: nil")
+            print("Before deletion - Info: nil")
         }
 
-        // savedTags と savedURLs の取得
-        guard var savedTags = sharedDefaults?.dictionary(forKey: "tags") as? [String: [String]] else {
+        // `urls`と`info`のデータ取得
+        guard var savedTags = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] else {
             print("No saved tags found in UserDefaults.")
             return
         }
         
-        guard var savedURLs = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] else {
-            print("No saved URLs found in UserDefaults.")
+        guard var savedInfo = sharedDefaults?.dictionary(forKey: "info") as? [String: [String: Any]] else {
+            print("No saved info found in UserDefaults.")
             return
         }
-        
-        // URLを保存しているタグから削除
+
+        // 1. `info`配列から該当URLを削除
+        savedInfo.removeValue(forKey: url)
+
+        // 2. `urls`配列内のタグから該当URLを削除
         for (tag, urls) in savedTags {
             if let index = urls.firstIndex(of: url) {
                 savedTags[tag]?.remove(at: index)
+                // URLが削除された後、タグ内にURLが残っていなければそのタグも削除
                 if savedTags[tag]?.isEmpty == true {
-                    savedTags.removeValue(forKey: tag) // 完全に削除
+                    savedTags.removeValue(forKey: tag)
                 }
             }
         }
-        
-        // URLを保存している URLs 配列から削除
-        for (tag, urls) in savedURLs {
-            if let index = urls.firstIndex(of: url) {
-                savedURLs[tag]?.remove(at: index)
-                if savedURLs[tag]?.isEmpty == true {
-                    savedURLs.removeValue(forKey: tag)
-                }
-            }
-        }
-        
-        // 既存のデータを完全に削除
-        sharedDefaults?.removeObject(forKey: "tags")
-        sharedDefaults?.removeObject(forKey: "urls")
-        
-        // 新しいデータを保存
-        sharedDefaults?.set(savedTags, forKey: "tags")
-        sharedDefaults?.set(savedURLs, forKey: "urls")
-        
+
+        // 3. `info`および`urls`の変更をUserDefaultsに保存
+        sharedDefaults?.set(savedTags, forKey: "urls")
+        sharedDefaults?.set(savedInfo, forKey: "info")
+
         // 削除後のデータをログ出力
-        if let updatedTags = sharedDefaults?.dictionary(forKey: "tags") as? [String: [String]] {
+        if let updatedTags = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] {
             print("After deletion - Tags: \(updatedTags)")
         } else {
             print("After deletion - Tags: nil")
         }
-        
-        if let updatedURLs = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] {
-            print("After deletion - URLs: \(updatedURLs)")
+
+        if let updatedInfo = sharedDefaults?.dictionary(forKey: "info") as? [String: [String: Any]] {
+            print("After deletion - Info: \(updatedInfo)")
         } else {
-            print("After deletion - URLs: nil")
+            print("After deletion - Info: nil")
         }
 
-        // UIを確実に更新
+        // 4. URL削除後にself.urlsを更新
         DispatchQueue.main.async {
             self.urls = [] // 一度リセット
-            self.displayAllURLs() // 再ロード
+            self.displayAllURLs() // 再ロードして画面を更新
         }
     }
+
+
 
 }
