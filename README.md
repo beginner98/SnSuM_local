@@ -2,8 +2,8 @@
 <img src="https://github.com/user-attachments/assets/006dcc59-caba-4d58-99a1-55d3ad4f1246" width="20%" />
 
 # SnSuM_local
-オフラインで動作するURLの管理・検索アプリです。
-iPhoneの共有シートからURLにタグをつけて保存できます。
+オフラインで動作するURLの管理・検索アプリです。<br>
+iPhoneの共有シートからURLにタグをつけて保存できます。<br>
 保存したアプリはタグで検索可能です。
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/user-attachments/assets/1826e68e-e570-4af6-ac7c-51da322a6b72" width="30%" />
