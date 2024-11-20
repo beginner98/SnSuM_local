@@ -8,6 +8,7 @@ iPhoneの共有シートからURLにタグをつけて保存できます。<br>
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/user-attachments/assets/1826e68e-e570-4af6-ac7c-51da322a6b72" width="30%" />
   <img src="https://github.com/user-attachments/assets/e5005b18-4901-46df-931f-051d5627f59d" width="30%" />
+  <img src="https://github.com/user-attachments/assets/8ad42d2c-a338-4564-9212-362a75d9ebc3" width="30%" />
   <img src="https://github.com/user-attachments/assets/b0ba8aa7-fe9e-42de-a270-30583a1f3b3a" width="30%" />
 </div>
 
