@@ -1,6 +1,7 @@
 import SwiftUI
 import WebKit
 
+//ミニウィンドウ用の設定
 struct WebView: UIViewRepresentable {
     let url: URL
 

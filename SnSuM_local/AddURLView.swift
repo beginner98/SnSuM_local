@@ -5,60 +5,86 @@ struct AddURLView: View {
     @State private var inputText: String = "" // ユーザーが入力するテキスト（タグ）
     @Environment(\.presentationMode) var presentationMode // 現在のビューを閉じるため
     
-    // App Groupに対応したUserDefaultsのインスタンス
+    // App Groupの利用
     private let sharedUserDefaults = UserDefaults(suiteName: "group.strage")
 
     var body: some View {
         VStack {
-            Text("Add URL")
-                .font(.title)
-                .padding()
-            
-            // URL入力フィールド
-            TextField("Enter URL", text: $inputURL)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-                .frame(height: 50)
-            
-            // テキスト入力フィールド（空白区切りのタグ）
-            TextField("Enter tags (separate by spaces)", text: $inputText) // テキスト入力欄
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-                .frame(height: 50)
-            
-            // 保存ボタン
-            Button(action: {
-                // URLとタグが入力されていればローカルに保存
-                if !inputURL.isEmpty {
-                    let tags = extractTags(from: inputText) // 空白区切りでタグを抽出
-                    addURL(inputURL, tags: tags)
+            Spacer()
+
+            VStack(spacing: 20) {
+                Text("Add URL")
+                    .font(.title)
+                    .padding()
+                
+                // URL入力フィールドとペーストボタン
+                HStack {
+                    TextField("Enter URL", text: $inputURL)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                        .frame(height: 50)
+                    
+                    // クリップボードからペーストするボタン
+                    Button(action: {
+                        if let url = UIPasteboard.general.string {
+                            inputURL = url
+                        }
+                    }) {
+                        Image(systemName: "doc.on.clipboard.fill")
+                            .font(.title)
+                            .foregroundColor(.black)
+                            .padding()
+                    }
                 }
-            }) {
-                Text("Save URL")
-                    .fontWeight(.medium)
-                    .frame(minWidth: 160)
-                    .foregroundColor(.white)
-                    .padding(12)
-                    .background(Color.accentColor)
-                    .cornerRadius(8)
-            }
-            .padding()
-            
-            // キャンセルボタン
-            Button(action: {
-                presentationMode.wrappedValue.dismiss() // キャンセル時に画面を閉じる
-            }) {
-                Text("Cancel")
-                    .foregroundColor(.red)
+                .padding(.horizontal)
+
+                // テキスト入力フィールド
+                TextField("tags", text: $inputText) // テキスト入力欄
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                    .frame(height: 50)
+                
+                // 保存ボタン
+                Button(action: {
+                    // URLとタグが入力されていればローカルに保存
+                    if !inputURL.isEmpty {
+                        let tags = extractTags(from: inputText) // 空白区切りでタグを抽出
+                        addURL(inputURL, tags: tags)
+                    }
+                }) {
+                    Text("Save URL")
+                        .fontWeight(.medium)
+                        .frame(minWidth: 160)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .background(Color.black)
+                        .cornerRadius(8)
+                }
+                // キャンセルボタン
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss() // キャンセル時に画面を閉じる
+                }) {
+                    Text("Cancel")
+                        .foregroundColor(.red)
+                        .fontWeight(.medium)
+                        .frame(minWidth: 160)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .background(Color.black)
+                        .cornerRadius(8)
+                }
+                .padding()
             }
             .padding()
             
             Spacer()
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
+        .navigationBarHidden(true)
     }
     
-    // ローカルでURLとタグを追加
+    // URLとタグを追加
     private func addURL(_ url: String, tags: [String], memo: String? = nil) {
         // 既存データの取得
         var savedURLs = sharedUserDefaults?.dictionary(forKey: "urls") as? [String: [String]] ?? [:]
@@ -96,8 +122,7 @@ struct AddURLView: View {
         print("URL added successfully!")
     }
 
-
-    // 入力されたテキストから空白区切りのタグを抽出するメソッド
+    // 入力されたテキストから空白区切りのタグを抽出
     private func extractTags(from text: String) -> [String] {
         // 半角スペースと全角スペースで区切る
         let words = text.split { $0 == " " || $0 == "　" }

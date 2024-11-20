@@ -1,8 +1,9 @@
 import SwiftUI
 
+// ShareSheetから開かれる画面の構成
 struct ShareView: View {
     @ObservedObject var model: ShareModel
-    var dismiss: () -> Void // 閉じる処理を渡すために変数を追加
+    var dismiss: () -> Void
 
     var body: some View {
         NavigationView {

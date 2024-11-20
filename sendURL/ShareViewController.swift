@@ -1,6 +1,7 @@
 import UIKit
 import SwiftUI
 
+//拡張機能ShareExtentionを使用するための設定
 class ShareViewController: UIViewController {
     
     override func viewDidLoad() {
@@ -9,13 +10,11 @@ class ShareViewController: UIViewController {
         // ShareModelインスタンスを作成
         let shareModel = ShareModel()
         shareModel.configure(context: extensionContext) // NSExtensionContextを渡す
-        
-        // ShareView (SwiftUI) を作成し、dismissing logicを追加
+ 
         let shareView = ShareView(model: shareModel) {
             self.dismiss(animated: true, completion: nil)
         }
-        
-        // UIHostingControllerを使ってSwiftUIビューをラップ
+
         let hostingController = UIHostingController(rootView: shareView)
         
         // ビュー階層に追加
@@ -25,12 +24,11 @@ class ShareViewController: UIViewController {
         hostingController.didMove(toParent: self)
     }
     
-    // isContentValid() をオーバーライドしてコンテンツの検証
+
     func isContentValid() -> Bool {
         return true
     }
 
-    // didSelectPost() をオーバーライドして、ポスト後に処理を行います。
     func didSelectPost() {
         self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }

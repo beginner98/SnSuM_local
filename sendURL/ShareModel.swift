@@ -6,7 +6,7 @@ class ShareModel: ObservableObject {
     @Published var sharedURL: URL?
     var extensionContext: NSExtensionContext?
     
-    // App Groupに対応したUserDefaultsのインスタンス
+    // App Groupの利用
     private let sharedUserDefaults = UserDefaults(suiteName: "group.strage")
     
     init() {}
@@ -54,7 +54,7 @@ class ShareModel: ObservableObject {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = formatter.string(from: currentDate)
         
-        // `urls` 配列に新しい URL をタグごとに追加
+        // urls配列に新しい URL をタグごとに追加
         for tag in tags {
             if savedURLs[tag] == nil {
                 savedURLs[tag] = []
@@ -64,7 +64,7 @@ class ShareModel: ObservableObject {
             }
         }
         
-        // `info` 配列に新しい URL 情報を追加
+        // info配列に新しい URL 情報を追加
         savedInfo[url] = [
             "tags": tags,
             "date": dateString,

@@ -1,4 +1,30 @@
 import SwiftUI
+//スプラッシュ画面
+struct SplashView: View {
+    @State private var isActive = false
+    var body: some View {
+        VStack {
+            if isActive {
+                ContentView()
+            } else {
+                Text("SnSuM.")
+                    .font(.system(size: 60))
+                    .fontWeight(.bold)
+                    .padding(.top, 50)
+                    .onAppear {
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation {
+                                isActive = true
+                            }
+                        }
+                    }
+            }
+        }
+        .transition(.opacity)
+    }
+}
+
 
 struct ContentView: View {
     @State private var searchTag: String = "" // 検索タグ入力用の状態
@@ -6,23 +32,36 @@ struct ContentView: View {
     @State private var isLoading: Bool = false // ローディング状態を管理
     @State private var selectedURL: URL? = nil
     
-    // App Groupに対応したUserDefaultsのインスタンス
-    private let sharedDefaults = UserDefaults(suiteName: "group.strage")
+    private let sharedDefaults = UserDefaults(suiteName: "group.strage") // Appgroupを使用
 
     var body: some View {
         NavigationView {
             VStack {
-                // タグ検索バーと検索結果
+                Spacer()
+
+                // タイトルとミニウィンドウの状態による変更
+                VStack {
+                    Text("SnSuM.")
+                        .font(.system(size: selectedURL == nil ? 60 : 30))
+                        .fontWeight(.bold)
+                        .padding(.top, selectedURL == nil ? 50 : 10) // 上部スペース調整
+                        .animation(.spring(), value: selectedURL)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+
                 VStack {
                     HStack {
                         TextField("Enter tag to search", text: $searchTag)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(height: 44)
                             .padding(.leading)
                         Button(action: {
+                            hideKeyboard()
                             searchByTag()
                         }) {
                             Text("Search")
-                                .padding()
+                                .frame(height: 44)
+                                .padding(.horizontal)
                                 .background(Color.black)
                                 .foregroundColor(.white)
                                 .cornerRadius(8)
@@ -32,13 +71,25 @@ struct ContentView: View {
 
                     // ミニウィンドウ
                     if let url = selectedURL {
-                        WebView(url: url)
-                            .frame(height: 300)
-                            .cornerRadius(8)
-                            .padding()
+                        ZStack(alignment: .topTrailing) {
+                            WebView(url: url)
+                                .frame(height: 300)
+                                .cornerRadius(8)
+                                .padding()
+
+                            // 閉じるボタン
+                            Button(action: {
+                                selectedURL = nil
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title2)
+                                    .foregroundColor(.gray)
+                                    .padding([.top, .trailing], 10)
+                            }
+                        }
                     }
 
-                    // ローディングインジケーターまたはリスト表示
+                    // ローディングまたはリスト表示
                     if isLoading {
                         ProgressView("Loading...")
                             .padding()
@@ -47,76 +98,103 @@ struct ContentView: View {
                             .foregroundColor(.gray)
                             .padding()
                     } else {
-                        List(urls, id: \.self) { url in
-                            HStack {
-                                Button(action: {
-                                    if let url = URL(string: url) {
-                                        selectedURL = url
+                        VStack {
+                            List {
+                                ForEach(urls, id: \.self) { url in
+                                    HStack {
+                                        Button(action: {
+                                            if let url = URL(string: url) {
+                                                selectedURL = url
+                                            }
+                                        }) {
+                                            Text(shortenURL(url))
+                                                .foregroundColor(.mint)
+                                                .lineLimit(1)
+                                        }
                                     }
-                                }) {
-                                    Text(shortenURL(url))
-                                        .foregroundColor(.mint)
-                                        .lineLimit(1)
+                                    .swipeActions(edge: .leading) {
+                                        Button(role: .destructive) {
+                                            deleteURL(url: url)
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }
+                                    .swipeActions(edge: .trailing) {
+                                        ShareLink(item: URL(string: url)!) {
+                                            Label("Share", systemImage: "square.and.arrow.up")
+                                        }
+                                    }
                                 }
                             }
-                            .swipeActions(edge: .leading) {
-                                Button(role: .destructive) {
-                                    deleteURL(url: url)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
-                            .swipeActions(edge: .trailing) {
-                                ShareLink(item: URL(string: url)!) {
-                                    Label("Share", systemImage: "square.and.arrow.up")
-                                }
-                            }
+                            .scrollContentBackground(.hidden) // デフォルト背景の非表示
+                            .background(Color.white)
                         }
                     }
                 }
-                
-                Spacer() // 検索部分とボタン群の間に余白を追加
-                
-                // 画面遷移のボタン群
-                HStack(spacing: 20) {
-                    NavigationLink(destination: YourListView()) {
-                        Image(systemName: "list.clipboard")
-                            .fontWeight(.medium)
-                            .frame(minWidth: 60)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.black)
-                            .cornerRadius(8)
-                    }
-                    NavigationLink(destination: AddURLView()) {
-                        Image(systemName: "plus.app")
-                            .fontWeight(.medium)
-                            .frame(minWidth: 60)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.black)
-                            .cornerRadius(8)
-                    }
-                    
-                    NavigationLink(destination: OptionsView()) {
-                        Image(systemName: "gearshape.fill")
-                            .fontWeight(.medium)
-                            .frame(minWidth: 60)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.black)
-                            .cornerRadius(8)
-                    }
-                }
+                .padding(.bottom, 50)
+
+                Spacer()
             }
             .navigationTitle("Home")
-            .navigationBarHidden(true) // ナビゲーションバーを非表示にする
+            .navigationBarHidden(true) // ナビゲーションバーを非表示
+            .overlay(
+                // AddURLViewボタンを画面左上に配置
+                NavigationLink(destination: AddURLView()) {
+                    Image(systemName: "plus.app")
+                        .font(.title)
+                        .foregroundColor(.black)
+                        .cornerRadius(8)
+                }
+                .padding(.top, 20)
+                .padding(.leading, 20),
+                alignment: .topLeading
+            )
+            .overlay(
+                // OptionsViewボタンを画面右上に配置
+                NavigationLink(destination: OptionsView()) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.title)
+                        .foregroundColor(.black)
+                        .cornerRadius(8)
+                }
+                .padding(.top, 20)
+                .padding(.trailing, 20),
+                alignment: .topTrailing
+            )
+            .onAppear {
+                // 初期表示時に日付順で最新5件のURLを表示
+                loadLatestURLs()
+            }
+        }
+    }
+
+    // 初期表示時に日付順で最新5件のURLを表示
+    private func loadLatestURLs() {
+        // info配列を取得して、URLを日付順に並べ替えて最新の5件を取得
+        if let savedInfo = sharedDefaults?.dictionary(forKey: "info") as? [String: [String: Any]] {
+            let sortedURLs = savedInfo.keys.sorted { (url1, url2) -> Bool in
+                if let date1 = savedInfo[url1]?["date"] as? Date,
+                   let date2 = savedInfo[url2]?["date"] as? Date {
+                    return date1 > date2
+                }
+                return false
+            }
+            let latestURLs = Array(sortedURLs.prefix(5))
+            
+            DispatchQueue.main.async {
+                self.urls = latestURLs
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.urls = []
+            }
         }
     }
 
     private func searchByTag() {
         guard !searchTag.isEmpty else {
-            displayAllURLs()
+            // 検索タグが空の場合は全URLを表示
+            loadLatestURLs()
             return
         }
 
@@ -140,19 +218,7 @@ struct ContentView: View {
             }
         }
     }
-
-    private func displayAllURLs() {
-        if let savedURLs = sharedDefaults?.dictionary(forKey: "urls") as? [String: [String]] {
-            DispatchQueue.main.async {
-                self.urls = savedURLs.flatMap { $0.value }
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.urls = []
-            }
-        }
-    }
-
+    
     private func shortenURL(_ url: String) -> String {
         url.count > 30 ? "\(url.prefix(30))..." : url
     }
@@ -182,10 +248,10 @@ struct ContentView: View {
             return
         }
 
-        // 1. `info`配列から該当URLを削除
+        // info配列から該当URLを削除
         savedInfo.removeValue(forKey: url)
 
-        // 2. `urls`配列内のタグから該当URLを削除
+        // urls配列内のタグから該当URLを削除
         for (tag, urls) in savedTags {
             if let index = urls.firstIndex(of: url) {
                 savedTags[tag]?.remove(at: index)
@@ -195,8 +261,9 @@ struct ContentView: View {
                 }
             }
         }
-
-        // 3. `info`および`urls`の変更をUserDefaultsに保存
+        sharedDefaults?.removeObject(forKey: "urls")
+        sharedDefaults?.removeObject(forKey: "info")
+        // infoとurlsの変更をUserDefaultsに保存
         sharedDefaults?.set(savedTags, forKey: "urls")
         sharedDefaults?.set(savedInfo, forKey: "info")
 
@@ -213,15 +280,13 @@ struct ContentView: View {
             print("After deletion - Info: nil")
         }
 
-        // 4. URL削除後にself.urlsを更新
+        // URL削除後にself.urlsを更新
         DispatchQueue.main.async {
-            self.urls = [] // 一度リセット
-            self.displayAllURLs() // 再ロードして画面を更新
+            self.urls = []
+            self.loadLatestURLs() // 再ロードして画面を更新
         }
     }
-
-}
-
-#Preview {
-    ContentView()
+    private func hideKeyboard() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
 }
