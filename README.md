@@ -1,13 +1,14 @@
 # README
-![logo1](https://github.com/user-attachments/assets/006dcc59-caba-4d58-99a1-55d3ad4f1246)
+<img src="https://github.com/user-attachments/assets/006dcc59-caba-4d58-99a1-55d3ad4f1246">
 
 # SnSuM_local
 オフラインで動作するURLの管理・検索アプリです。
 iPhoneの共有シートからURLにタグをつけて保存できます。
 保存したアプリはタグで検索可能です。
-![screenshot_1](https://github.com/user-attachments/assets/1826e68e-e570-4af6-ac7c-51da322a6b72)
-![screenshot_2](https://github.com/user-attachments/assets/e5005b18-4901-46df-931f-051d5627f59d)
-
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/user-attachments/assets/1826e68e-e570-4af6-ac7c-51da322a6b72" width="30%" />
+  <img src="https://github.com/user-attachments/assets/e5005b18-4901-46df-931f-051d5627f59d" width="30%" />
+</div>
 # 公開場所
 現在非公開です。
 
