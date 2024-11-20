@@ -10,6 +10,7 @@ iPhoneの共有シートからURLにタグをつけて保存できます。
   <img src="https://github.com/user-attachments/assets/e5005b18-4901-46df-931f-051d5627f59d" width="30%" />
   <img src="https://github.com/user-attachments/assets/b0ba8aa7-fe9e-42de-a270-30583a1f3b3a" width="30%" />
 </div>
+
 # 公開場所
 現在非公開です。
 
@@ -30,4 +31,4 @@ iPhoneの共有シートからURLにタグをつけて保存できます。
   + 保存済みタグの一覧表示機能
 
 # テスト
-+ XCode
++ XCode 16.1
